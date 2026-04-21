@@ -32,9 +32,9 @@ var GRADES = {
   D:{label:"早急な対応必要",color:"#B71C1C",bg:"#FFEBEE",mark:"!!"}
 };
 var PLANS = [
-  {name:"梅",title:"真心お墓参り代行",items:"合掌・簡易清掃・献花・写真報告",color:"#E8A0BF",bg:"#FFF0F5",best:false},
-  {name:"竹",title:"標準クリーニング",items:"梅+洗剤洗浄・コケ水垢除去",color:"#4CAF50",bg:"#F1F8E9",best:true},
-  {name:"松",title:"プレミアム再生研磨",items:"竹+特殊研磨・撥水コーティング",color:"#FFB300",bg:"#FFFDE7",best:false}
+  {name:"梅",title:"真心お墓参り代行",items:"合掌・簡易清掃・献花・写真報告",color:"#E8A0BF",bg:"#FFF0F5"},
+  {name:"竹",title:"標準クリーニング",items:"梅（献花除く）+洗剤洗浄・コケ水垢除去",color:"#4CAF50",bg:"#F1F8E9"},
+  {name:"松",title:"長期美観維持プラン",items:"竹+撥水コーティング",color:"#FFB300",bg:"#FFFDE7"}
 ];
 
 // State
@@ -179,9 +179,11 @@ function resultHTML() {
       '</div></div>'
     : "";
 
+  var bestPlanName = r.recommended_plan || "竹";
   var plansHTML = PLANS.map(function(p){
-    return '<div style="background:' + p.bg + ';border:' + (p.best ? "2px solid " + p.color : "1px solid #e0e0e0") + ';border-radius:10px;padding:12px;position:relative;">' +
-      (p.best ? '<div style="position:absolute;top:-8px;right:10px;background:' + p.color + ';color:#fff;font-size:9px;padding:2px 8px;border-radius:8px;font-weight:700;">おすすめ</div>' : "") +
+    var isBest = (p.name === bestPlanName);
+    return '<div style="background:' + p.bg + ';border:' + (isBest ? "2px solid " + p.color : "1px solid #e0e0e0") + ';border-radius:10px;padding:12px;position:relative;">' +
+      (isBest ? '<div style="position:absolute;top:-8px;right:10px;background:' + p.color + ';color:#fff;font-size:9px;padding:2px 8px;border-radius:8px;font-weight:700;">おすすめ</div>' : "") +
       '<div style="display:flex;align-items:center;gap:10px;">' +
         '<span class="serif" style="background:' + p.color + ';color:#fff;font-size:11px;font-weight:800;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + p.name + '</span>' +
         '<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:#333;">' + p.title + '</div><div style="font-size:11px;color:#777;margin-top:2px;">' + p.items + '</div></div>' +
