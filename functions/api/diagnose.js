@@ -65,6 +65,7 @@ function fixResult(r) {
 export async function onRequestPost(context) {
   try {
     const apiKey = context.env.ANTHROPIC_API_KEY;
+    const modelName = context.env.ANTHROPIC_MODEL || "claude-sonnet-4-5";
     if (!apiKey) {
       return new Response(JSON.stringify({ error: "ANTHROPIC_API_KEY not configured" }), {
         status: 500,
@@ -101,7 +102,7 @@ export async function onRequestPost(context) {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
+        model: modelName,
         max_tokens: 2000,
         messages: [
           {
